@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:projeto_gastos/model/transaction.dart';
 
 main() => runApp(ExpansesApp());
 
@@ -14,6 +15,11 @@ class ExpansesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  final _transaction = [
+    Transaction(id: 't1',tittle: 'Novo Gasto', value: 350.85, data: DateTime.now()),
+     Transaction(id: 't2', tittle: 'Conta de Luz', value: 200.00, data: DateTime.now())
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +37,12 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-            Card(
-              child: Text('Lista de Transações'),
+            Column(
+              children: _transaction.map((tr) {
+                return Card(
+                  child: Text(tr.tittle),
+                );
+              }).toList(),
             )
           ],
         ));

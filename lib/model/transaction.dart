@@ -7,7 +7,7 @@ class Transaction{
   Transaction({
     required this.id,
     required this.tittle,
-    required this.data,
-    required this.value
+    required this.value,
+    required this.data
   });
 }
