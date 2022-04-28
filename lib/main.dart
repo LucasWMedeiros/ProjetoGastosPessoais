@@ -16,8 +16,10 @@ class ExpansesApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final _transaction = [
-    Transaction(id: 't1',tittle: 'Novo Gasto', value: 350.85, data: DateTime.now()),
-     Transaction(id: 't2', tittle: 'Conta de Luz', value: 200.00, data: DateTime.now())
+    Transaction(
+        id: 't1', tittle: 'Novo Gasto', value: 350.85, data: DateTime.now()),
+    Transaction(
+        id: 't2', tittle: 'Conta de Luz', value: 200.00, data: DateTime.now())
   ];
 
   @override
@@ -42,25 +44,30 @@ class MyHomePage extends StatelessWidget {
                 return Card(
                   child: Row(children: [
                     Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10
-                      ),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2
-                        )
-                      ),
+                          border: Border.all(color: Colors.purple, width: 2)),
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        tr.value.toString()
+                        tr.value.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.purple),
                       ),
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(tr.tittle),
-                        Text(tr.data.toString())
+                        Text(
+                          tr.tittle,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          fontSize: 16
+                          ),
+                        ),
+                        Text(tr.data.toString(), style: TextStyle(color: Colors.grey),)
                       ],
                     )
                   ]),
