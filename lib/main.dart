@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:projeto_gastos/componentes/transaction_form.dart';
 import 'package:projeto_gastos/componentes/transaction_list.dart';
 import 'package:projeto_gastos/model/transaction.dart';
 
@@ -17,8 +18,7 @@ class ExpansesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final valueController = TextEditingController();
-  final tittleController = TextEditingController();
+  
 
   final _transaction = [
     Transaction(
@@ -44,37 +44,7 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             TransactionList(_transaction),
-            Card(
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    TextField(
-                      controller: tittleController,
-                      decoration: InputDecoration(
-                        labelText: 'Titulo',
-                      ),
-                    ),
-                    TextField(
-                      controller: valueController,
-                      decoration: InputDecoration(labelText: 'Valor R\$'),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FlatButton(
-                          onPressed: () {},
-                          child: Text('Nova Transação'),
-                          textColor: Colors.purple,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            TransactionForm()
           ],
         ));
   }
