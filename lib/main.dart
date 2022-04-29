@@ -77,25 +77,28 @@ class MyHomePage extends StatelessWidget {
             ),
             Card(
               elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Titulo',
-                        ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Titulo',
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Valor R\$'
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Valor R\$'),
+                    ),
+                    FlatButton(
+                      onPressed: () {},
+                      child: Text('Nova Transação'),
+                      textColor: Colors.purple,
+                    )
+                  ],
                 ),
               ),
+            ),
           ],
         ));
   }
