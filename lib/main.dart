@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:projeto_gastos/model/transaction.dart';
 
 main() => runApp(ExpansesApp());
@@ -50,7 +51,7 @@ class MyHomePage extends StatelessWidget {
                           border: Border.all(color: Colors.purple, width: 2)),
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        tr.value.toString(),
+                        'R\$ ${tr.value.toStringAsFixed(2)}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -63,11 +64,12 @@ class MyHomePage extends StatelessWidget {
                         Text(
                           tr.tittle,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          fontSize: 16
-                          ),
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                        Text(tr.data.toString(), style: TextStyle(color: Colors.grey),)
+                        Text(
+                          DateFormat('d MM y').format(tr.data),
+                          style: TextStyle(color: Colors.grey),
+                        )
                       ],
                     )
                   ]),
