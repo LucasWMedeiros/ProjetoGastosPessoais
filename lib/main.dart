@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:projeto_gastos/componentes/transaction_list.dart';
 import 'package:projeto_gastos/model/transaction.dart';
 
 main() => runApp(ExpansesApp());
@@ -16,6 +17,9 @@ class ExpansesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  final valueController = TextEditingController();
+  final tittleController = TextEditingController();
+
   final _transaction = [
     Transaction(
         id: 't1', tittle: 'Novo Gasto', value: 350.85, data: DateTime.now()),
@@ -39,42 +43,7 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-            Column(
-              children: _transaction.map((tr) {
-                return Card(
-                  child: Row(children: [
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.purple, width: 2)),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        'R\$ ${tr.value.toStringAsFixed(2)}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.purple),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          tr.tittle,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Text(
-                          DateFormat('d MM y').format(tr.data),
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
-                    )
-                  ]),
-                );
-              }).toList(),
-            ),
+            TransactionList(_transaction),
             Card(
               elevation: 5,
               child: Padding(
@@ -83,18 +52,25 @@ class MyHomePage extends StatelessWidget {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     TextField(
+                      controller: tittleController,
                       decoration: InputDecoration(
                         labelText: 'Titulo',
                       ),
                     ),
                     TextField(
+                      controller: valueController,
                       decoration: InputDecoration(labelText: 'Valor R\$'),
                     ),
-                    FlatButton(
-                      onPressed: () {},
-                      child: Text('Nova Transação'),
-                      textColor: Colors.purple,
-                    )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FlatButton(
+                          onPressed: () {},
+                          child: Text('Nova Transação'),
+                          textColor: Colors.purple,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
