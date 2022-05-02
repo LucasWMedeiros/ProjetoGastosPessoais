@@ -3,6 +3,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TransactionForm extends StatelessWidget {
   final valueController = TextEditingController();
@@ -11,6 +12,18 @@ class TransactionForm extends StatelessWidget {
   final void Function(String, double) onSubmit;
 
   TransactionForm(this.onSubmit);
+
+  void _submitForm(){
+    final title = tittleController.text;
+    final value = double.tryParse(valueController.text) ?? 0.0;
+
+    if(title.isEmpty || value <= 0){
+      return;
+    }
+
+    onSubmit(title, value);
+                    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +43,14 @@ class TransactionForm extends StatelessWidget {
               TextField(
                 controller: valueController,
                 decoration: InputDecoration(labelText: 'Valor R\$'),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (value) => _submitForm(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FlatButton(
-                    onPressed: () {
-                      final title = tittleController.text;
-                      final value = double.tryParse(valueController.text) ?? 0.0;
-                      onSubmit(title, value);
-                    },
+                    onPressed: _submitForm,
                     child: Text('Nova Transação'),
                     textColor: Colors.purple,
                   ),
