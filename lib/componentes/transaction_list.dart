@@ -25,6 +25,7 @@ class TransactionList extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       child: Text(
                         'R\$ ${tr.value.toStringAsFixed(2)}',
+                        // ignore: prefer_const_constructors
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -36,11 +37,12 @@ class TransactionList extends StatelessWidget {
                       children: [
                         Text(
                           tr.tittle,
+                          // ignore: prefer_const_constructors
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         Text(
-                          DateFormat('d MM y').format(tr.data),
+                          DateFormat('dd MM y').format(tr.data),
                           style: TextStyle(color: Colors.grey),
                         )
                       ],
