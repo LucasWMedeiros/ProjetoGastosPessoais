@@ -14,6 +14,10 @@ class ExpansesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MyHomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+        accentColor: Colors.pink
+      ),
     );
   }
 }
@@ -41,6 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _transaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   _opneTransactionForm(BuildContext context) {
