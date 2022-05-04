@@ -10,15 +10,34 @@ import 'package:projeto_gastos/model/transaction.dart';
 main() => runApp(ExpansesApp());
 
 class ExpansesApp extends StatelessWidget {
+  final ThemeData tema = ThemeData();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MyHomePage(),
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-        accentColor: Colors.pink
-      ),
-    );
+      theme: tema.copyWith(
+        colorScheme: tema.colorScheme.copyWith(
+        primary: Colors.amber,
+        secondary: Colors.pink,
+        ),
+        textTheme: tema.textTheme.copyWith(
+            headline6: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black
+            )
+          ),
+          appBarTheme: AppBarTheme(
+            titleTextStyle: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+            )
+          )
+
+    ));
+        
   }
 }
 
@@ -28,11 +47,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _transaction = [
-    Transaction(
-        id: 't1', tittle: 'Novo Gasto', value: 350.85, data: DateTime.now()),
-    Transaction(
-        id: 't2', tittle: 'Conta de Luz', value: 200.00, data: DateTime.now())
+  final List<Transaction> _transaction = [
+    // Transaction(
+    //     id: 't1', tittle: 'Novo Gasto', value: 350.85, data: DateTime.now()),
+    // Transaction(
+    //     id: 't2', tittle: 'Conta de Luz', value: 200.00, data: DateTime.now())
   ];
 
   void _addTransaction(String tittle, double value) {
@@ -65,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () =>_opneTransactionForm(context),
+            onPressed: () => _opneTransactionForm(context),
           )
         ],
       ),
