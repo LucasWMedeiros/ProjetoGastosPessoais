@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:projeto_gastos/componentes/chart.dart';
 import 'package:projeto_gastos/componentes/transaction_form.dart';
 import 'package:projeto_gastos/componentes/transaction_list.dart';
 import 'package:projeto_gastos/model/transaction.dart';
@@ -48,12 +49,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transaction = [
-    // Transaction(
-    //     id: 't1', tittle: 'Novo Gasto', value: 350.85, data: DateTime.now()),
-    // Transaction(
-    //     id: 't2', tittle: 'Conta de Luz', value: 200.00, data: DateTime.now())
+    Transaction(
+        id: 't1', tittle: 'Novo Gasto', value: 350.85, data: DateTime.now().subtract(Duration(days: 40))),
+    Transaction(
+        id: 't1', tittle: 'Novo Gasto', value: 400.00, data: DateTime.now().subtract(Duration(days: 3))),
+    Transaction(
+        id: 't2', tittle: 'Conta de Luz', value: 200.00, data: DateTime.now().subtract(Duration(days: 2)))
   ];
 
+  List<Transaction> get _recentTransactions{
+    return _transaction.where((tr){
+      return tr.data.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
   void _addTransaction(String tittle, double value) {
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
@@ -93,12 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            Container(
-              child: Card(
-                child: Text('Gráfico'),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_transaction),
           ],
         ),
