@@ -15,16 +15,15 @@ class _TransactionFormState extends State<TransactionForm> {
 
   final tittleController = TextEditingController();
 
-  void _submitForm(){
+  void _submitForm() {
     final title = tittleController.text;
     final value = double.tryParse(valueController.text) ?? 0.0;
 
-    if(title.isEmpty || value <= 0){
+    if (title.isEmpty || value <= 0) {
       return;
     }
 
     widget.onSubmit(title, value);
-                    
   }
 
   @override
@@ -48,13 +47,29 @@ class _TransactionFormState extends State<TransactionForm> {
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onSubmitted: (value) => _submitForm(),
               ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Text('Nenhuma data selecionada!'),
+                    FlatButton(
+                        textColor: Colors.amber,
+                        onPressed: () {},
+                        child: Text(
+                          'Selecionar Data',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ))
+                  ],
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FlatButton(
+                  RaisedButton(
                     onPressed: _submitForm,
                     child: Text('Nova Transação'),
-                    textColor: Colors.purple,
+                    color: Colors.amber,
+                    textColor: Colors.white,
                   ),
                 ],
               ),
