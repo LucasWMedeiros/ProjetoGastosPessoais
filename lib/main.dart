@@ -68,8 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
       _transaction.add(newTransaction);
     });
 
+
     Navigator.of(context).pop();
   }
+    _removeTransaction(String id){
+      setState(() {
+        _transaction.removeWhere((tr) => tr.id == id);
+      });
+    }
 
   _opneTransactionForm(BuildContext context) {
     showModalBottomSheet(
@@ -97,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // ignore: prefer_const_literals_to_create_immutables
           children: [
             Chart(_recentTransactions),
-            TransactionList(_transaction),
+            TransactionList(_transaction, _removeTransaction),
           ],
         ),
       ),

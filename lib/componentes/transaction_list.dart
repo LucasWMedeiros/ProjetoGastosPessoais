@@ -6,9 +6,10 @@ import 'package:projeto_gastos/model/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(String) onRemoved;
 
   // ignore: prefer_const_constructors_in_immutables
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.onRemoved);
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,11 @@ class TransactionList extends StatelessWidget {
               ),
               subtitle: Text(
                 DateFormat('dd MMM y').format(tr.data)
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                color: Theme.of(context).errorColor,
+                onPressed: () => onRemoved(tr.id),
               ),
             ),
           );
