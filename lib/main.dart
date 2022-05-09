@@ -71,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Navigator.of(context).pop();
   }
+  
     _removeTransaction(String id){
       setState(() {
         _transaction.removeWhere((tr) => tr.id == id);
