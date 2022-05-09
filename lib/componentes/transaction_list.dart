@@ -40,10 +40,12 @@ class TransactionList extends StatelessWidget {
             ),
             child: ListTile(
               leading: CircleAvatar(
+                backgroundColor: Colors.amber,
                 radius: 30,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: FittedBox(child: Text('R\$${tr.value}')),
+                  child: FittedBox(child: Text('R\$${tr.value}',
+                   style: TextStyle(color: Colors.white),)),
                 ),
               ),
               title: Text(
