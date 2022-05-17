@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, deprecated_member_use
 
+import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gastos/componentes/chart.dart';
 import 'package:projeto_gastos/componentes/transaction_form.dart';
@@ -78,66 +80,83 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  Widget _getIconButton(IconData icon, Function() fn){
+    return Platform.isIOS
+    ? GestureDetector(onTap: fn, child: Icon(icon),)
+    : IconButton(onPressed: fn, icon: Icon(icon));
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
-    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
+    
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final chartList = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
 
-    final appBar = AppBar(
-      title: Text('Despesas Pessoais'),
-      actions: [
-        if(isLandscape)
-        IconButton(
-          icon: Icon(_showChart ? Icons.list : Icons.pie_chart),
-          onPressed: () => setState(() {
-            _showChart= !_showChart;
-          }),
-        ),
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _opneTransactionForm(context),
-        ),
-      ],
+    final actions = [
+      if (isLandscape)
+      _getIconButton(
+        _showChart ? iconList : chartList
+        , () {
+          setState(() {
+            _showChart = !_showChart;
+          });
+        }),
+        _getIconButton(
+          Platform.isIOS ? CupertinoIcons.add : Icons.add
+          , () => _opneTransactionForm(context))
+    ];
+
+    final PreferredSizeWidget appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: actions,
     );
-
-    final avaliableHeight = MediaQuery.of(context).size.height -
+    
+    final avaliableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        mediaQuery.padding.top;
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+  final bodyPage = SafeArea(
+    child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            // if(isLandscape)
-            // Row(
-            //   children: [
-            //     Text('Exibir Gráfico'),
-            //     Switch(
-            //       value: _showChart,
-            //       onChanged: (value) {
-            //         setState(() {
-            //           _showChart = value;
-            //         });
-            //       },
-            //     ),
-            //   ],
-            // ),
             if (_showChart || !isLandscape)
               Container(
                   height: avaliableHeight * (isLandscape ? 0.7 :  0.3),
                   child: Chart(_recentTransactions)),
             if (!_showChart || !isLandscape)
               Container(
-                height: avaliableHeight * 0.7,
+                height: avaliableHeight * (isLandscape ? 1 : 0.7),
                 child: TransactionList(_transaction, _removeTransaction),
               ),
           ],
         ),
+      ),);
+
+
+
+    return Platform.isIOS 
+    ? CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text('Despesas Pessoais'),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: actions,
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
+      child: bodyPage,
+    )
+    : Scaffold(
+      appBar: appBar,
+      body: bodyPage,
+      floatingActionButton: Platform.isIOS
+      ? Container() 
+      :  FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => _opneTransactionForm(context),
       ),
